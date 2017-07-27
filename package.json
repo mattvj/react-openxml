@@ -1,0 +1,55 @@
+{
+  "name": "@react-openxml/build",
+  "version": "0.0.1",
+  "description": "A react renderer of OpenXML documents.",
+  "scripts": {
+    "build": "npm run build:clean && lerna run build --ignore @react-openxml/example-*",
+    "build:watch": "lerna run build:watch --concurrency=1000 --stream --ignore @react-openxml/examples",
+    "build:clean": "lerna run build:clean",
+    "prepublish": "npm run build",
+    "postinstall": "lerna bootstrap",
+    "example": "babel-node ./examples/index.js",
+    "precommit": "npm run example -- all && git add . && lint-staged",
+    "lint": "eslint performance src --ignore-path .gitignore",
+    "test": "jest --config .jestrc"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint",
+      "prettier --single-quote --trailing-comma=all --write",
+      "git add"
+    ]
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "renderer",
+    "openxml"
+  ],
+  "author": "Matt Johnson <matt@primality.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-prettier": "^2.1.0",
+    "eslint-plugin-jest": "^20.0.3",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.0.1",
+    "lint-staged": "^3.4.2",
+    "mockdate": "^2.0.1",
+    "prettier": "^1.3.1"
+  },
+  "dependencies": {
+    "jest": "^20.0.4",
+    "lerna": "2.0.0-rc.5",
+    "rimraf": "^2.6.1"
+  },
+  "homepage": "https://github.com/mattvj/react-openxml#readme",
+  "repository": "git@github.com:mattvj/react-openxml.git"
+}

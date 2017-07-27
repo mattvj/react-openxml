@@ -1,0 +1,125 @@
+'use strict';
+
+import ReactFiberReconciler from 'react-dom/lib/ReactFiberReconciler';
+import emptyObject from 'fbjs/lib/emptyObject';
+import { createElement } from './elements';
+
+const OpenXMLRenderer = ReactFiberReconciler({
+  getRootHostContext() {
+    return emptyObject;
+  },
+
+  getChildHostContext() {
+    return emptyObject;
+  },
+
+  prepareForCommit() {
+    // noop
+  },
+
+  resetAfterCommit() {
+    // noop
+  },
+
+  createInstance(
+    type,
+    props,
+    rootContainerInstance,
+    hostContext,
+    internalInstanceHandle,
+  ) {
+    return createElement(type, props, rootContainerInstance);
+  },
+
+  async appendInitialChild(parentInstance, child) {
+    Promise.resolve(parentInstance).then(parentInstance => {
+      if (parentInstance.appendChild) {
+        parentInstance.appendChild(child);
+      } else {
+        parentInstance.document = child;
+      }
+    });
+  },
+
+  finalizeInitialChildren(testElement, type, props, rootContainerInstance) {
+    return false;
+  },
+
+  prepareUpdate(testElement, type, oldProps, newProps, hostContext) {
+    return true;
+  },
+
+  commitUpdate(
+    instance,
+    type,
+    oldProps,
+    newProps,
+    rootContainerInstance,
+    internalInstanceHandle,
+  ) {
+    // noop
+  },
+
+  commitMount(
+    instance,
+    type,
+    newProps,
+    rootContainerInstance,
+    internalInstanceHandle,
+  ) {
+    // noop
+  },
+
+  shouldSetTextContent(props) {
+    return false;
+  },
+
+  resetTextContent(testElement) {
+    // noop
+  },
+
+  createTextInstance(
+    text,
+    rootContainerInstance,
+    hostContext,
+    internalInstanceHandle,
+  ) {
+    return text;
+  },
+
+  commitTextUpdate(textInstance, oldText, newText) {
+    textInstance.chidren = newText;
+  },
+
+  appendChild(parentInstance, child) {
+    if (parentInstance.appendChild) {
+      parentInstance.appendChild(child);
+    } else {
+      parentInstance.document = child;
+    }
+  },
+
+  insertBefore(parentInstance, child, beforeChild) {
+    // noob
+  },
+
+  removeChild(parentInstance, child) {
+    parentInstance.removeChild(child);
+  },
+
+  scheduleAnimationCallback(fn) {
+    setTimeout(fn);
+  },
+
+  scheduleDeferredCallback(fn) {
+    setTimeout(fn, 0, { timeRemaining: Infinity });
+  },
+
+  useSyncScheduling: true,
+
+  getPublicInstance(inst) {
+    return inst;
+  },
+});
+
+export { OpenXMLRenderer, createElement };
